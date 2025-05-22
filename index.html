@@ -4,143 +4,603 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oluwasemilore Adebayo - Medical CV</title>
-     <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        #header {
+            background: linear-gradient(135deg, #003366, #013220);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            animation: slideDown 1s ease-out;
+        }
+
+        #header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+            animation: fadeInUp 1.2s ease-out 0.3s both;
+        }
+
+        #header p {
+            margin: 8px 0;
+            font-size: 1.1em;
+            opacity: 0.9;
+            animation: fadeInUp 1.2s ease-out 0.6s both;
+        }
+
+        #header a {
+            color: #abcdef;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        #header a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 100%;
+            height: 300px;
+            perspective: 1000px;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.4s ease, transform 0.8s ease;
+        }
+
+        /* Entrance animations */
+        .flip-card.animate-in {
+            animation: slideInUp 0.8s ease-out forwards;
+        }
+
+        .flip-card:nth-child(1) { animation-delay: 0.1s; }
+        .flip-card:nth-child(2) { animation-delay: 0.2s; }
+        .flip-card:nth-child(3) { animation-delay: 0.3s; }
+        .flip-card:nth-child(4) { animation-delay: 0.4s; }
+        .flip-card:nth-child(5) { animation-delay: 0.5s; }
+        .flip-card:nth-child(6) { animation-delay: 0.6s; }
+        .flip-card:nth-child(7) { animation-delay: 0.7s; }
+
+        /* Hover effects */
+        .flip-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            filter: brightness(1.05);
+        }
+
+        .flip-card:hover .flip-card-front {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s ease-in-out;
+            transform-style: preserve-3d;
+            border-radius: 15px;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .flip-card-front {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Glowing border effect on hover */
+        .flip-card-front::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            border-radius: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .flip-card:hover .flip-card-front::before {
+            opacity: 1;
+        }
+
+        .flip-card-back {
+            background: white;
+            color: #333;
+            transform: rotateY(180deg);
+            overflow-y: auto;
+            justify-content: flex-start;
+            text-align: left;
+        }
+
+        .kpi-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .kpi-number {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .flip-card:hover .kpi-number {
+            transform: scale(1.1);
+            animation: bounce 0.6s ease;
+        }
+
+        .kpi-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+
+        .card-back-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #003366;
+            border-bottom: 2px solid #003366;
+            padding-bottom: 10px;
+        }
+
+        .back-content {
+            width: 100%;
+        }
+
+        .back-content dl {
+            margin-bottom: 15px;
+        }
+
+        .back-content dt {
+            font-weight: bold;
+            margin-top: 15px;
+            color: #003366;
+        }
+
+        .back-content dd {
+            margin-left: 0;
+            margin-bottom: 10px;
+            padding-left: 15px;
+        }
+
+        .back-content ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .back-content li {
+            margin-bottom: 8px;
+        }
+
+        .back-content a {
+            color: #2E86AB;
+            text-decoration: none;
+        }
+
+        .back-content a:hover {
+            text-decoration: underline;
+        }
+
+        .flip-indicator {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            font-size: 0.9em;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .flip-card:hover .flip-indicator {
+            opacity: 1;
+            animation: bounce 1s ease infinite;
+        }
+
+        /* Medical-themed gradient colors for each card */
+        .card-education .flip-card-front {
+            background: linear-gradient(135deg, #2E86AB 0%, #A23B72 100%); /* Deep blue to medical purple */
+        }
+
+        .card-appointments .flip-card-front {
+            background: linear-gradient(135deg, #C1272D 0%, #F15A24 100%); /* Medical red to orange */
+        }
+
+        .card-presentations .flip-card-front {
+            background: linear-gradient(135deg, #006A6B 0%, #00A693 100%); /* Teal to medical green */
+        }
+
+        .card-publications .flip-card-front {
+            background: linear-gradient(135deg, #003F7F 0%, #0074D9 100%); /* Navy to medical blue */
+        }
+
+        .card-achievements .flip-card-front {
+            background: linear-gradient(135deg, #8E0E00 0%, #D2001F 100%); /* Dark red to bright red */
+        }
+
+        .card-activities .flip-card-front {
+            background: linear-gradient(135deg, #004D40 0%, #26A69A 100%); /* Dark teal to light teal */
+        }
+
+        .card-references .flip-card-front {
+            background: linear-gradient(135deg, #37474F 0%, #607D8B 100%); /* Medical grey to blue grey */
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            animation: fadeInUp 2s ease-out 1.2s both;
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .flip-card {
+                height: 280px;
+            }
+            
+            #header h1 {
+                font-size: 2em;
+            }
+            
+            .kpi-number {
+                font-size: 3em;
+            }
+        }
+    </style>
 </head>
 <body>
-      <div id="header">
+    <div id="header">
         <h1>Oluwasemilore Adebayo</h1>
         <p>Email: <a href="mailto:semiloreadebayo@yahoo.co.uk">semiloreadebayo@yahoo.co.uk</a></p>
         <p>LinkedIn: <a href="https://www.linkedin.com/in/oluwasemilore-adebayo/" target="_blank">linkedin.com/in/oluwasemilore-adebayo/</a></p>
         <p>GMC Registration: 8001224</p>
     </div>
 
-    <hr>
+    <main>
+        <div class="cards-grid">
+            <!-- Education Card -->
+            <div class="flip-card card-education" onclick="flipCard(this)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="kpi-title">Education</div>
+                        <div class="kpi-number">5</div>
+                        <div class="kpi-label">Qualifications</div>
+                        <div class="flip-indicator">Click to view details →</div>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="card-back-title">Education & Qualifications</div>
+                        <div class="back-content">
+                            <dl>
+                                <dt>Sep 2024- Present</dt>
+                                <dd>PGCert in Medical and Healthcare Education, Hertfordshire, University of Hertfordshire</dd>
 
- <main>  
- <details>
-        <summary>Education & Qualifications</summary>
-         <dl>
-            <dt>Sep 2024- Present</dt>
-            <dd>PGCert in Medical and Healthcare Education, Hertfordshire, University of Hertfordshire</dd>
+                                <dt>Sep 2017-Jul 2023</dt>
+                                <dd>Medicine (MBChB), Birmingham, University of Birmingham</dd>
 
-            <dt>Sep 2017-Jul 2023</dt>
-            <dd>Medicine (MBChB), Birmingham, University of Birmingham</dd>
+                                <dt>Sep 2021-Aug 2022</dt>
+                                <dd>Trauma Science MSc, Birmingham, University of Birmingham<br>Grade: Distinction</dd>
 
-            <dt>Sep 2021-Aug 2022</dt>
-            <dd>Trauma Science MSc, Birmingham, University of Birmingham<br>Grade: Distinction</dd>
+                                <dt>Sep 2015-Jul 2017</dt>
+                                <dd>A-Levels, Leicester, Saint Paul's Catholic School<br>Biology: A*, Chemistry: A, Mathematics: A</dd>
 
-            <dt>Sep 2015-Jul 2017</dt>
-            <dd>A-Levels, Leicester, Saint Paul's Catholic School<br>Biology: A*, Chemistry: A, Mathematics: A</dd>
+                                <dt>Sep 2011-July 2015</dt>
+                                <dd>GCSE, Leicester, Saint Paul's Catholic School<br>GCSE's: 10 A*s-A including Biology (A*), Chemistry (A*), Mathematics (A*) and Physics (A*)</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <dt>Sep 2011-July 2015</dt>
-            <dd>GCSE, Leicester, Saint Paul's Catholic School<br>GCSE's: 10 A*s-A including Biology (A*), Chemistry (A*), Mathematics (A*) and Physics (A*)</dd>
-        </dl>
-    </details>
+            <!-- Appointments Card -->
+            <div class="flip-card card-appointments" onclick="flipCard(this)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="kpi-title">Appointments</div>
+                        <div class="kpi-number">3</div>
+                        <div class="kpi-label">Current Roles</div>
+                        <div class="flip-indicator">Click to view details →</div>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="card-back-title">Professional Appointments</div>
+                        <div class="back-content">
+                            <dl>
+                                <dt>August 2024- August 2025</dt>
+                                <dd>Cambridge Year 4 Clinical Supervisor, East and North Hertfordshire Trust, Stevenage
+                                    <ul>
+                                        <li>Delivering weekly bedside teaching to medical students</li>
+                                        <li>Mentorship and pastoral support for 4th year medical students</li>
+                                    </ul>
+                                </dd>
 
+                                <dt>August 2024- August 2025</dt>
+                                <dd>Foundation Year 2 Doctor- Academic Foundation Programme (Medical Education), East and North Hertfordshire Trust, Stevenage
+                                    <ul>
+                                        <li>Rotations: Geriatric medicine (6 months), Respiratory medicine (6 months)</li>
+                                        <li>Coupled with 2 days a week as a clinical teaching fellow to UCL and Cambridge Medical students</li>
+                                        <li>Academic Foundation Doctors representative</li>
+                                    </ul>
+                                </dd>
 
-      <details>
-        <summary>Appointments</summary>
-         <dl>
-            <dt>August 2024- August 2025</dt>
-            <dd>Cambridge Year 4 Clinical Supervisor, East and North Hertfordshire Trust, Stevenage
-                <ul>
-                    <li>Delivering weekly bedside teaching to medical students</li>
-                    <li>Mentorship and pastoral support for 4th year medical students</li>
-                </ul>
-            </dd>
+                                <dt>August 2023- August 2024</dt>
+                                <dd>Foundation Year 1 Doctor- Academic Foundation Programme (Medical Education), East and North Hertfordshire Trust, Stevenage
+                                    <ul>
+                                        <li>Rotations: Psychiatry (4 months), Vascular Surgery (4 months), Acute Internal Medicine (4 months)</li>
+                                        <li>Academic Foundation Doctors representative</li>
+                                    </ul>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <dt>August 2024- August 2025</dt>
-            <dd>Foundation Year 2 Doctor- Academic Foundation Programme (Medical Education), East and North Hertfordshire Trust, Stevenage
-                <ul>
-                    <li>Rotations: Geriatric medicine (6 months), Respiratory medicine (6 months)</li>
-                    <li>Coupled with 2 days a week as a clinical teaching fellow to UCL and Cambridge Medical students</li>
-                    <li>Academic Foundation Doctors representative</li>
-                </ul>
-            </dd>
+            <!-- Presentations Card -->
+            <div class="flip-card card-presentations" onclick="flipCard(this)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="kpi-title">Presentations</div>
+                        <div class="kpi-number">6</div>
+                        <div class="kpi-label">Conference Talks</div>
+                        <div class="flip-indicator">Click to view details →</div>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="card-back-title">Conference Presentations</div>
+                        <div class="back-content">
+                            <dl>
+                                <dt>August 2024</dt>
+                                <dd>Student advanced trauma management and skills (SATMAS): an audit and validation study<br>[Lister Hospital Academic Grand Round], Oral Presentation</dd>
 
-            <dt>August 2023- August 2024</dt>
-            <dd>Foundation Year 1 Doctor- Academic Foundation Programme (Medical Education), East and North Hertfordshire Trust, Stevenage
-                <ul>
-                    <li>Rotations: Psychiatry (4 months), Vascular Surgery (4 months), Acute Internal Medicine (4 months)</li>
-                    <li>Academic Foundation Doctors representative</li>
-                </ul>
-            </dd>
-        </dl>
-    </details>
+                                <dt>March 2023</dt>
+                                <dd>The Reconstruction of Mandible Defects in War Injuries: Systematic review and Meta-analysis.<br>[British Trauma Society Conference], Oral Presentation</dd>
 
-    <details>
-        <summary>Scholarly & Professional Activities</summary>
-         <dl>
-            <dt>August 2024</dt>
-            <dd>Student advanced trauma management and skills (SATMAS): an audit and validation study<br>[Lister Hospital Academic Grand Round], Oral Presentation</dd>
+                                <dt>November 2022</dt>
+                                <dd>Evaluating the Effectiveness of Virtual Reality for Arthroplasty Training in Orthopaedic Trainees: A Systematic Review<br>[Association of Surgeons in Training (ASiT) Conference], Poster Presentation</dd>
 
-            <dt>March 2023</dt>
-            <dd>The Reconstruction of Mandible Defects in War Injuries: Systematic review and Meta-analysis.<br>[British Trauma Society Conference], Oral Presentation</dd>
+                                <dt>November 2022</dt>
+                                <dd>Exploring the effectiveness of artificial intelligence, machine learning and deep learning in trauma triage: A systematic review and meta-analysis.<br>[British Trauma Society Conference], Oral Presentation</dd>
 
-            <dt>November 2022</dt>
-            <dd>Evaluating the Effectiveness of Virtual Reality for Arthroplasty Training in Orthopaedic Trainees: A Systematic Review<br>[Association of Surgeons in Training (ASiT) Conference], Poster Presentation</dd>
+                                <dt>March 2021</dt>
+                                <dd>Evaluating the Effectiveness of Osseointegration for Traumatic Lower Limb Amputations: A Narrative Review<br>[Association of Surgeons in Training (ASiT) Conference], Oral Presentation<br>Orthopaedic Ambulatory Surgery Cancellations; Can We Avoid Them?<br>[Birmingham Surgical Symposium Undergraduate Conference], Poster Presentation</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <dt>November 2022</dt>
-            <dd>Exploring the effectiveness of artificial intelligence, machine learning and deep learning in trauma triage: A systematic review and meta-analysis.<br>[British Trauma Society Conference], Oral Presentation</dd>
+            <!-- Publications Card -->
+            <div class="flip-card card-publications" onclick="flipCard(this)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="kpi-title">Publications</div>
+                        <div class="kpi-number">8</div>
+                        <div class="kpi-label">Peer-reviewed Papers</div>
+                        <div class="flip-indicator">Click to view details →</div>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="card-back-title">Research Publications</div>
+                        <div class="back-content">
+                            <h3>Peer-reviewed</h3>
+                            <ul>
+                                <li>Adebayo, O., Bhuiyan, Z.A., & Ahmed, Z. (2023). Exploring the effectiveness of artificial intelligence, machine learning and deep learning in trauma triage: A systematic review and meta-analysis. Injury, 54(1), 164-173. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/37822960/" target="_blank">37822960</a></li>
+                                <li>Bhuiyan, Z.A., Adebayo, O., & Ahmed, Z. (2022). Localised insulin administration for wound healing in non-diabetic adults: A systematic review and meta-analysis of randomised controlled trials. Wound Repair and Regeneration, 30(6), 795-805. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/37199544/" target="_blank">37199544</a></li>
+                                <li>Heshemipoura, Y., Rehman, U., Adebayo, O., Sarwar, M.S., Neves, S., Kamel, Y., & Brennan, P.A. (2022). Use of human acellular dermal matrix in rhinoplasty: a systematic review of the literature and meta-analysis. Journal of Plastic, Reconstructive & Aesthetic Surgery, 75(12), 4337-4347. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/38199888/" target="_blank">38199888</a></li>
+                                <li>Rehman, U., Shemie, M., Sarwar, M.S., Adebayo, O., & Brennan, P.A. (2022). The Reconstruction of Mandible Defects in War Injuries: Systematic Review and Meta-Analysis. Journal of Cranio-Maxillo-Facial Surgery, 50(9), 785-794. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/38779399/" target="_blank">38779399</a></li>
+                                <li>Rehman, U., Shemie, M., Sarwar, M.S., Adebayo, O., & Brennan, P.A. (2022). Use of biomaterials in the reconstruction of posterior lamellar eyelid defects: a systematic review and meta-analysis. Orbit, 41(6), 555-564. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/37400344/" target="_blank">37400344</a></li>
+                                <li>Kumar, P. R., Large, J., Konda, N., Hashmi, Y., Adebayo, O., Sivaraman, M., & Lee, J. J. (2024). Student advanced trauma management and skills (SATMAS): A validation study. European Journal of Trauma and Emergency Surgery, 50(4), 1407–1418. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/38305858/" target="_blank">38305858</a></li>
+                                <li>MacKenzie, A., Dhoot, A., Rehman, U., Sarwar, M.S., Adebayo, O., & Brennan, P.A. (2023). Use of supermicrosurgery in craniofacial and head and neck soft tissue reconstruction: a systematic review of the literature and meta-analysis. Microsurgery, 43(1), 10-18. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/38290861/" target="_blank">38290861</a></li>
+                                <li>Dhoot, A., Mackenzie, A., Rehman, U., Adebayo, O., Neves, S., Sarwar, M.S., & Brennan, P.A. (2023). Use of scapular tip flaps in the reconstruction of head and neck defects: a systematic review and meta-analysis. Journal of Oral and Maxillofacial Surgery, 81(2), 209-219. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/38431506/" target="_blank">38431506</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <dt>March 2021</dt>
-            <dd>Evaluating the Effectiveness of Osseointegration for Traumatic Lower Limb Amputations: A Narrative Review<br>[Association of Surgeons in Training (ASiT) Conference], Oral Presentation<br>Orthopaedic Ambulatory Surgery Cancellations; Can We Avoid Them?<br>[Birmingham Surgical Symposium Undergraduate Conference], Poster Presentation</dd>
-        </dl>
-    </details>
+            <!-- Achievements Card -->
+            <div class="flip-card card-achievements" onclick="flipCard(this)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="kpi-title">Achievements</div>
+                        <div class="kpi-number">11</div>
+                        <div class="kpi-label">Awards & Honors</div>
+                        <div class="flip-indicator">Click to view details →</div>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="card-back-title">Awards & Achievements</div>
+                        <div class="back-content">
+                            <ul>
+                                <li>November 2022: Sir Arthur Thomson Trust Conference Fund</li>
+                                <li>August 2021: Top 150 Future Leaders Award</li>
+                                <li>May 2021: Outstanding Achievement in Direct Observation of Examination Skills (DOES) Assessments</li>
+                                <li>July 2019: Blue Commendation Letter at the University of Birmingham Medical School</li>
+                                <li>August 2018: Alderman Newton's Education Scholarship</li>
+                                <li>July 2018: Blue Commendation Letter at the University of Birmingham Medical School</li>
+                                <li>September 2017: Science Award at Saint Paul's Catholic School</li>
+                                <li>August 2017: Alderman Newton's Education Scholarship</li>
+                                <li>December 2015- July 2017: Head Boy at Saint Paul Catholic School</li>
+                                <li>September 2015: Science Award at Saint Paul's Catholic School</li>
+                                <li>September 2013: Headmaster's Award at Saint Paul's Catholic School</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-     <details>
-        <summary>Publications</summary>
-        <h3>Peer-reviewed</h3>
-        <ul>
-            <li>Adebayo, O., Bhuiyan, Z.A., & Ahmed, Z. (2023). Exploring the effectiveness of artificial intelligence, machine learning and deep learning in trauma triage: A systematic review and meta-analysis. Injury, 54(1), 164-173. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/37822960/" target="_blank">37822960</a></li>
-            <li>Bhuiyan, Z.A., Adebayo, O., & Ahmed, Z. (2022). Localised insulin administration for wound healing in non-diabetic adults: A systematic review and meta-analysis of randomised controlled trials. Wound Repair and Regeneration, 30(6), 795-805. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/37199544/" target="_blank">37199544</a></li>
-            <li>Heshemipoura, Y., Rehman, U., Adebayo, O., Sarwar, M.S., Neves, S., Kamel, Y., & Brennan, P.A. (2022). Use of human acellular dermal matrix in rhinoplasty: a systematic review of the literature and meta-analysis. Journal of Plastic, Reconstructive & Aesthetic Surgery, 75(12), 4337-4347. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/38199888/" target="_blank">38199888</a></li>
-            <li>Rehman, U., Shemie, M., Sarwar, M.S., Adebayo, O., & Brennan, P.A. (2022). The Reconstruction of Mandible Defects in War Injuries: Systematic Review and Meta-Analysis. Journal of Cranio-Maxillo-Facial Surgery, 50(9), 785-794. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/38779399/" target="_blank">38779399</a></li>
-            <li>Rehman, U., Shemie, M., Sarwar, M.S., Adebayo, O., & Brennan, P.A. (2022). Use of biomaterials in the reconstruction of posterior lamellar eyelid defects: a systematic review and meta-analysis. Orbit, 41(6), 555-564. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/37400344/" target="_blank">37400344</a></li>
-            <li>Kumar, P. R., Large, J., Konda, N., Hashmi, Y., Adebayo, O., Sivaraman, M., & Lee, J. J. (2024). Student advanced trauma management and skills (SATMAS): A validation study. European Journal of Trauma and Emergency Surgery, 50(4), 1407–1418. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/38305858/" target="_blank">38305858</a></li>
-            <li>MacKenzie, A., Dhoot, A., Rehman, U., Sarwar, M.S., Adebayo, O., & Brennan, P.A. (2023). Use of supermicrosurgery in craniofacial and head and neck soft tissue reconstruction: a systematic review of the literature and meta-analysis. Microsurgery, 43(1), 10-18. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/38290861/" target="_blank">38290861</a></li>
-            <li>Dhoot, A., Mackenzie, A., Rehman, U., Adebayo, O., Neves, S., Sarwar, M.S., & Brennan, P.A. (2023). Use of scapular tip flaps in the reconstruction of head and neck defects: a systematic review and meta-analysis. Journal of Oral and Maxillofacial Surgery, 81(2), 209-219. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/38431506/" target="_blank">38431506</a></li>
-        </ul>
-    </details>
+            <!-- Activities Card -->
+            <div class="flip-card card-activities" onclick="flipCard(this)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="kpi-title">Activities</div>
+                        <div class="kpi-number">6</div>
+                        <div class="kpi-label">Leadership Roles</div>
+                        <div class="flip-indicator">Click to view details →</div>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="card-back-title">Extracurricular Activities</div>
+                        <div class="back-content">
+                            <ul>
+                                <li>Avid Drummer, Guitarist, Keyboardist and Singer</li>
+                                <li>Medical First Responder at the Birmingham 2022 Commonwealth Games (July 2022- August 2022)</li>
+                                <li>President of the University of Birmingham Trauma & Orthopaedics Society (June 2022-May 2023)</li>
+                                <li>Healthcare Leadership Academy Scholar (August 2021-August 2022)</li>
+                                <li>Director of The Aspiring Medic's Support (TAMS) C.I.C Scholars Programme</li>
+                                <li>Band Director of the award-winning University of Birmingham Gospel Choir.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-     <details>
-        <summary>Achievements</summary>
-        <ul>
-            <li>November 2022: Sir Arthur Thomson Trust Conference Fund</li>
-            <li>August 2021: Top 150 Future Leaders Award</li>
-            <li>May 2021: Outstanding Achievement in Direct Observation of Examination Skills (DOES) Assessments</li>
-            <li>July 2019: Blue Commendation Letter at the University of Birmingham Medical School</li>
-            <li>August 2018: Alderman Newton's Education Scholarship</li>
-            <li>July 2018: Blue Commendation Letter at the University of Birmingham Medical School</li>
-            <li>September 2017: Science Award at Saint Paul's Catholic School</li>
-            <li>August 2017: Alderman Newton's Education Scholarship</li>
-            <li>December 2015- July 2017: Head Boy at Saint Paul Catholic School</li>
-            <li>September 2015: Science Award at Saint Paul's Catholic School</li>
-            <li>September 2013: Headmaster's Award at Saint Paul's Catholic School</li>
-        </ul>
-    </details>
-    
-     <details>
-        <summary>Extracurricular Activities</summary>
-        <ul>
-            <li>Avid Drummer, Guitarist, Keyboardist and Singer</li>
-            <li>Medical First Responder at the Birmingham 2022 Commonwealth Games (July 2022- August 2022)</li>
-            <li>President of the University of Birmingham Trauma & Orthopaedics Society (June 2022-May 2023)</li>
-            <li>Healthcare Leadership Academy Scholar (August 2021-August 2022)</li>
-            <li>Director of The Aspiring Medic's Support (TAMS) C.I.C Scholars Programme</li>
-            <li>Band Director of the award-winning University of Birmingham Gospel Choir.</li>
-        </ul>
-    </details>
+            <!-- References Card -->
+            <div class="flip-card card-references" onclick="flipCard(this)">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <div class="kpi-title">References</div>
+                        <div class="kpi-number">✓</div>
+                        <div class="kpi-label">Available on Request</div>
+                        <div class="flip-indicator">Click to view details →</div>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="card-back-title">Professional References</div>
+                        <div class="back-content">
+                            <p>Professional references from academic supervisors, clinical mentors, and research collaborators are available upon request.</p>
+                            <p>Please contact me directly for specific reference requirements.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-    <details>
-        <summary>References</summary>
-        <p>Available on request</p>
-    </details>
-</main>
-
-    <hr>
     <footer>
-        <p>© 2025 Oluwasemilore Adebayo</p> 
+        <p>© 2025 Oluwasemilore Adebayo</p>
     </footer>
+
+    <script>
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+        }
+
+        // Initialize entrance animations when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const cards = document.querySelectorAll('.flip-card');
+                cards.forEach(card => {
+                    card.classList.add('animate-in');
+                });
+            }, 500);
+        });
+    </script>
 </body>
 </html>
