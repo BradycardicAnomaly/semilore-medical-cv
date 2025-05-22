@@ -8,8 +8,7 @@ body {
 }
 
 #header {
-    background-image: linear-gradient(to bottom, #0B6623, #355E3B);
-    background-color: #0B6623;
+    background-color: #0056b3; 
     color: white; 
     padding: 20px 0; 
     text-align: center;
