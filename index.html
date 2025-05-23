@@ -55,6 +55,49 @@
             text-decoration: underline;
         }
 
+        /* Download Button Section */
+        .download-section {
+            text-align: center;
+            margin: -20px 0 40px 0;
+            animation: fadeInUp 1.5s ease-out 0.9s both;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #2E86AB, #003366);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 25px rgba(46, 134, 171, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-family: inherit;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(46, 134, 171, 0.4);
+            background: linear-gradient(135deg, #3a94b8, #004477);
+        }
+
+        .download-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .download-btn svg {
+            transition: transform 0.3s ease;
+        }
+
+        .download-btn:hover svg {
+            transform: translateY(2px);
+        }
+
         main {
             max-width: 1200px;
             margin: 0 auto;
@@ -368,6 +411,18 @@
         <p>GMC Registration: 8001224</p>
     </div>
 
+    <!-- Download CV Button -->
+    <div class="download-section">
+        <button class="download-btn" onclick="downloadCV()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7,10 12,15 17,10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download Full CV (PDF)
+        </button>
+    </div>
+
     <main>
         <div class="cards-grid">
             <!-- Education Card -->
@@ -590,6 +645,20 @@
     <script>
         function flipCard(card) {
             card.classList.toggle('flipped');
+        }
+
+        // Download CV function
+        function downloadCV() {
+            // Create a temporary link element
+            const link = document.createElement('a');
+            link.href = 'Medical CV 2.0- Oluwasemilore Adebayo.docx'; // You'll need to upload this file to your GitHub repo
+            link.download = 'Oluwasemilore_Adebayo_Medical_CV.docx';
+            link.style.display = 'none';
+            
+            // Add to DOM, click, and remove
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         // Initialize entrance animations when page loads
